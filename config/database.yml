@@ -21,13 +21,11 @@ default: &default
   # http://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   port: 5432
-  host: '127.0.0.1'
 
 development:
   <<: *default
-  database: covid-19-api_development
-  username: covid-19-api
-  password:
+  database: 'covid-19-api_development'
+  host: '127.0.0.1'
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
