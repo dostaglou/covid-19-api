@@ -1,6 +1,6 @@
 module SlackNotification
   class << self
-    WEBHOOK_URL = Rails.application.secrets.webhook
+    WEBHOOK_URL = Rails.application.secrets.webhook || ENV["SLACK_HOOK"]
     def hello
       notifier = Slack::Notifier.new WEBHOOK_URL
       msg = "Hello World"
