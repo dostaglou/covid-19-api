@@ -1,24 +1,18 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+To Start:
+Fork the project, bundle install the gems.
 
-Things you may want to cover:
+For the local PG server:
+Start:
+pg_ctl -D /usr/local/var/postgres start
 
-* Ruby version
+Stop:
+pg_ctl -D /usr/local/var/postgres stop
 
-* System dependencies
 
-* Configuration
+You will need a secrets.yml file with a Slack WebHook
+shared:
+  webhook: YOUR-WEB-HOOK
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+You will also need to generate a list of the 201 countries so that you can pregen the nation's models to connect data, too.
