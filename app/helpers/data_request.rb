@@ -17,6 +17,7 @@ module DataRequest
         id = Country.find_or_create_by(name: datum["country"])&.id
         datum = {
           country_id: id,
+          country_name: datum["country"],
           total_cases: datum["cases"] || 0,
           today_cases: datum["todayCases"] || 0,
           total_deaths: datum["deaths"] || 0,
