@@ -14,7 +14,7 @@ module SlackNotification
       notifier = Slack::Notifier.new WEBHOOK_URL
       msg = data
 
-      notifier.post text: msg
+      notifier.post text: msg, channel: ['covid-19-updates']
     end
   end
 end
