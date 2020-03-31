@@ -10,11 +10,9 @@ module SlackNotification
       notifier.post text: msg
     end
 
-    def send_japan_data(data:)
+    def send_msg(data:)
       notifier = Slack::Notifier.new WEBHOOK_URL
       msg = data
-
-      Slack::Notifier::Util::LinkFormatter.format(msg)
 
       notifier.post text: msg
     end
