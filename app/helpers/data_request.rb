@@ -27,7 +27,7 @@ module DataRequest
           critical: datum["critical"] || 0,
           case_per_million: datum["casesPerOneMillion"] || 0,
           death_per_million: datum["deathsPerOneMillion"] || 0,
-          updated: Time.at(datum["updated"]).to_datetime,
+          updated: Time.at(datum["updated"]&.to_i / 1000).to_datetime,
         }
 
         CovidDaily.create(datum)
@@ -45,14 +45,18 @@ module DataRequest
       end
 
 final_msg =
-"Total Cases \n
+"Data Collected at: #{rc.first.updated}
+--------------------------------- \n
+Total Cases \n
 :flag-jp: #{rc.first.total_cases} :flag-us: #{rc.second.total_cases} :flag-fr: #{rc.third.total_cases} :flag-ca: #{rc.fourth.total_cases} :flag-cn: #{rc.fifth.total_cases} :flag-ph: #{rc.last.total_cases} \n
 Total Deaths: \n
 :flag-jp: #{rc.first.total_deaths} :flag-us: #{rc.second.total_deaths} :flag-fr: #{rc.third.total_deaths} :flag-ca: #{rc.fourth.total_deaths} :flag-cn: #{rc.fifth.total_deaths} :flag-ph: #{rc.last.total_deaths} \n
-New Cases Today: \n
+--------------------------------- \n
+New Cases Yesterday: \n
 :flag-jp: #{rc.first.today_cases} :flag-us: #{rc.second.today_cases} :flag-fr: #{rc.third.today_cases} :flag-ca: #{rc.fourth.today_cases} :flag-cn: #{rc.fifth.today_cases} :flag-ph: #{rc.last.today_cases} \n
-Deaths Today: \n
+Deaths Yesterday: \n
 :flag-jp: #{rc.first.today_deaths} :flag-us: #{rc.second.today_deaths} :flag-fr: #{rc.third.today_deaths} :flag-ca: #{rc.fourth.today_deaths} :flag-cn: #{rc.fifth.today_deaths} :flag-ph: #{rc.last.today_deaths} \n
+--------------------------------- \n
 Active Cases \n
 :flag-jp: #{rc.first.active} :flag-us: #{rc.second.active} :flag-fr: #{rc.third.active} :flag-ca: #{rc.fourth.active} :flag-cn: #{rc.fifth.active} :flag-ph: #{rc.last.active} \n
 Recovered Cases \n

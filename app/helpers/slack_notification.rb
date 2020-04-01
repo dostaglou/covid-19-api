@@ -13,8 +13,11 @@ module SlackNotification
     def send_msg(data:)
       notifier = Slack::Notifier.new WEBHOOK_URL
       msg = data
-
-      notifier.post text: msg, channel: ['covid-19-updates']
+      if Rails.env.development?
+        notifier.post text: msg
+      else
+        notifier.post text: msg, channel: ['covid-19-updates']
+      end
     end
   end
 end
