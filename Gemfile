@@ -41,6 +41,7 @@ gem "slack-notifier"
 gem 'httparty', '~> 0.13.7'
 
 # GraphQL
+
 gem "graphql"
 gem "graphql-errors"
 
