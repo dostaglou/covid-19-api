@@ -46,16 +46,17 @@ gem "graphql"
 gem "graphql-errors"
 gem 'graphiql-rails', group: :development
 
-# Quick DB entry creation for tests
-gem "factory_bot_rails"
-
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 
+  # For basic rspec testing
   gem "rspec-rails"
+  # For CI integration
   gem "rspec_junit_formatter"
 
+  # Quick DB entry creation for tests
+  gem "factory_bot_rails"
 end
 
 group :development do
