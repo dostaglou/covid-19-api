@@ -9,11 +9,7 @@ class LineBotController < ApplicationController
   end
 
   def broadcast
-    message = {
-      type: "text",
-      text: "hello"
-    }
-    response = client.push_message("U8f0b1fd345692caaf23f8e0451447587", message)
+
   end
 
   def callback
