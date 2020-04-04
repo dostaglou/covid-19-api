@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_31_123616) do
+ActiveRecord::Schema.define(version: 2020_04_04_135839) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -38,6 +38,16 @@ ActiveRecord::Schema.define(version: 2020_03_31_123616) do
     t.datetime "updated_at", null: false
     t.string "country_name"
     t.index ["country_id"], name: "index_covid_dailies_on_country_id"
+  end
+
+  create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "line_id"
+    t.string "line_name"
+    t.boolean "line_notifications"
+    t.string "line_countries"
+    t.datetime "line_deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end
