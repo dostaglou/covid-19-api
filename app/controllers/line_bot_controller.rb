@@ -10,11 +10,6 @@ class LineBotController < ApplicationController
 
   def callback
     body = request.body.read
-    puts "I am here in the code!
-
-
-
-    oh yea"
     signature = request.env['HTTP_X_LINE_SIGNATURE']
     unless client.validate_signature(body, signature)
       head :bad_request
@@ -28,9 +23,11 @@ class LineBotController < ApplicationController
         user_id = evetn.dig("source", "userId")
         username = ""
         response = client.get_profile(user_id)
+        p response
         case response
         when Net::HTTPSuccess
           contact = JSON.parse(response.body)
+          p contact
           username = contact["displayName"]
         else
           p "#{response.code} #{response.body}"
@@ -42,6 +39,7 @@ class LineBotController < ApplicationController
             type: "text",
             text: "a response"
           }
+          p message
           client.reply_message(event["replyToken"], message)
         end
       end
