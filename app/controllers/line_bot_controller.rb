@@ -29,7 +29,7 @@ class LineBotController < ApplicationController
         username = ""
         response = client.get_profile(user_id)
         case response
-        when Net::HTTPSuccess thencontact = JSON.parse(response.body)
+        when Net::HTTPSuccess then contact = JSON.parse(response.body)
           username = contact["displayName"]
         else
           p "#{response.code} #{response.body}"
