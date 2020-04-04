@@ -40,6 +40,10 @@ gem "slack-notifier"
 
 gem 'httparty', '~> 0.13.7'
 
+# Line integration
+
+gem 'line-bot-api'
+
 # GraphQL
 
 gem "graphql"
