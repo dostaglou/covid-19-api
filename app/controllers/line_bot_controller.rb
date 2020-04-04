@@ -59,8 +59,8 @@ class LineBotController < ApplicationController
       message_update_country(/\w+(-update)/i.match(message).to_s.split("-")&.first)
     elsif /\w(-countries)/i.match(message)
       message_x_country_list(/\w(-countries)/i.match(message).to_s.first)
-    elsif (message.gsub(/\W/, ' ').split(' ').map{|x| x.capitalize} & Country::COUNTRY_NAMES).length > 0
-      message_country_data((message.gsub(/\W/, ' ').split(' ').map{|x| x.capitalize} & Country::COUNTRY_NAMES).first)
+    elsif (message.gsub(/\W/, ' ').split(' ') & Country::COUNTRY_NAMES).length > 0
+      message_country_data((message.gsub(/\W/, ' ').split(' ') & Country::COUNTRY_NAMES).first)
     else
       message_unclear
     end
