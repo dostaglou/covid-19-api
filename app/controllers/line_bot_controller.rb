@@ -10,17 +10,19 @@ class LineBotController < ApplicationController
 
   def callback
     body = request.body.read
+    puts "I am here in the code!
 
+
+
+    oh yea"
     signature = request.env['HTTP_X_LINE_SIGNATURE']
     unless client.validate_signature(body, signature)
       head :bad_request
     end
 
-    byebug
     events = client.parse_events_from(body)
 
     events.each { |event|
-      byebug
       case event
       when Line::Bot::Event::Message::Text
         user_id = evetn.dig("source", "userId")
@@ -34,9 +36,10 @@ class LineBotController < ApplicationController
         end
 
         if event.message["text"]
+          # event.message["text"]&.to_s
           message = {
             type: "text",
-            text: event.message["text"]&.to_s
+            text: "a response"
           }
           client.reply_message(event["replyToken"], message)
         end
