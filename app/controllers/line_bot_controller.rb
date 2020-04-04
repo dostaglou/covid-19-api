@@ -3,20 +3,21 @@ class LineBotController < ApplicationController
 
   def client
     @client ||= Line::Bot::Client.new { |config|
-      config.channel_secret = Rails.application.secrets.line[:channel_secret] || ENV["LINE_CHANNEL_SECRET"]
-      config.channel_token = Rails.application.secrets.line[:channel_token] || ENV["LINE_CHANNEL_TOKEN"]
+      config.channel_secret = ENV["LINE_CHANNEL_SECRET"] || Rails.application.secrets.line[:channel_secret]
+      config.channel_token = ENV["LINE_CHANNEL_TOKEN"] || Rails.application.secrets.line[:channel_token]
     }
   end
 
   def callback
     body = request.body.read
     signature = request.env['HTTP_X_LINE_SIGNATURE']
+    puts "SIGNATURE \n #{signature}"
     unless client.validate_signature(body, signature)
       head :bad_request
     end
 
     events = client.parse_events_from(body)
-    events.each { |event|
+    events.each do |event|
       case event.type
       when Line::Bot::Event::MessageType::Text
         user_id = event["source"]["userId"]
@@ -37,7 +38,7 @@ class LineBotController < ApplicationController
           client.reply_message(event["replyToken"], message)
         end
       end
-    }
+    end
 
     head :ok
   end
