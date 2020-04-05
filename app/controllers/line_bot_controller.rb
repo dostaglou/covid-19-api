@@ -8,8 +8,13 @@ class LineBotController < ApplicationController
     }
   end
 
-  def broadcast
+  def broadcast(id:, content:)
 
+    message = {
+      type: "text",
+      text: content
+    }
+    response = client.push_message(id, message)
   end
 
   def callback
@@ -50,6 +55,7 @@ class LineBotController < ApplicationController
     # TOO LONG
     if message.length > 50
       message_unclear
+
     # HELP
     elsif message_help(message: message, analyze: true)
       message_help(message: message, analyze: false)
@@ -66,9 +72,13 @@ class LineBotController < ApplicationController
     elsif message_turn_off(message: message, analyze: true)
       message_turn_off(message: message, analyze: false)
 
-    # UPDATE (Notification)
+    # UPDATE-COUNTRY (Notification)
     elsif message_update_country(message: message, analyze: true)
       message_update_country(message:message, analyze: false)
+
+    # UPDATE-TIME (Notification)
+    elsif message_update_time(message: message, analyze: true)
+      message_update_time(message: message, analyze: false)
 
     # LIST
     elsif message_x_country_list(message: message, analyze: true)
@@ -92,8 +102,9 @@ class LineBotController < ApplicationController
     "1) Type 1 country name (capitalized) to get info on it. Ex: Japan, USA, UK. \n" +
     "2) Type LETTER-countries to get a list of those countries. Ex: j-countries. \n" +
     "3) Type Signup to get daily (9am JST) notifications about a single coutnry. \n" +
-    "4) Type Turn-Off to remove daily notifications. \n" +
-    "5) Type Delete to delete your account. \n"
+    "4) Type HOUR:MINUTES to change notification time. Must be in half-hour increments. Ex: 09:30, 23:00. \n" +
+    "5) Type Turn-Off to remove daily notifications. \n" +
+    "6) Type Delete to delete your account. \n"
     end
   end
 
@@ -166,6 +177,28 @@ class LineBotController < ApplicationController
     end
   end
 
+  def message_update_time(message:, analyze:)
+    return false unless @user_id
+    if analyze
+      return false unless t = /(\d{0,2}:\d{0,2})/.match(message)
+      h, m = t.to_s.split(':')
+      h.to_i.between?(0, 24) && m.to_i.between?(0, 60) ? true : false
+    else
+      if user = User.where(line_deleted_at: nil).find_by(line_id: @user_id)
+        time_string = /(\d{0,2}:\d{0,2})/.match(message).to_s
+        time = time_string.to_time
+        minute = (time.min - (time.min % 30)) == 0? "00" : "30"
+        hour = time.hour.to_s
+        time_slot = hour + ":" + minute
+        user.update(line_update_time: time_slot, line_notifications: true)
+        "Updated.\n" +
+        "You will be notified around #{user.line_update_time} about #{user.line_countries}"
+      else
+        "You must sign up to use this feature"
+      end
+    end
+  end
+
   def message_x_country_list(message:, analyze:, letter: nil)
     if analyze
       /\w(-countries)/i.match(message)
@@ -186,6 +219,18 @@ class LineBotController < ApplicationController
   def message_country_data(message:)
     country = country_name_resolver(message: message)
 
+    single_country_info(country)
+  end
+
+  def message_unclear
+    "I am sorry. I do not not understand. Please text help for a list of options"
+  end
+
+  def country_name_resolver(message:)
+    country = Country::COUNTRY_NAMES.find { | c | message.upcase.include?(c.upcase) }
+  end
+
+  def single_country_info(country)
     entry = CovidDaily.where(country_name: country )
                       .order(created_at: :desc)
                       .limit(1)
@@ -197,11 +242,13 @@ class LineBotController < ApplicationController
     "New Cases #{entry.today_cases} - New Deaths #{entry.today_deaths}"
   end
 
-  def message_unclear
-    "I am sorry. I do not not understand. Please text help for a list of options"
-  end
+  # RAKE -------------------------------
+  def line_broadcast_update(users)
+    users.each do |user|
+      id = user.line_id
+      content = single_country_info(user.line_countries)
 
-  def country_name_resolver(message:)
-    country = Country::COUNTRY_NAMES.find { | c | message.upcase.include?(c.upcase) }
+      broadcast(id: id, content: content)
+    end
   end
 end
