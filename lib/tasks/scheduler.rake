@@ -5,6 +5,7 @@ end
 
 task :line_update => :environment do
   current = Time.now
+  current += 9.hours if Rails.env.development?
   hour = current.hour.to_s
   minute = (current.min - (current.min % 30)) == 0? "00" : "30"
   time_slot = hour + ":" + minute

@@ -102,7 +102,7 @@ class LineBotController < ApplicationController
     "1) Type 1 country name (capitalized) to get info on it. Ex: Japan, USA, UK. \n" +
     "2) Type LETTER-countries to get a list of those countries. Ex: j-countries. \n" +
     "3) Type Signup to get daily (9am JST) notifications about a single coutnry. \n" +
-    "4) Type HOUR:MINUTES to change notification time. Must be in half-hour increments. Ex: 09:30, 23:00. \n" +
+    "4) Type HOUR:MINUTES to change notification time. Must be in half-hour increments. Ex: 09:30, 23:00. All times in GMT \n" +
     "5) Type Turn-Off to remove daily notifications. \n" +
     "6) Type Delete to delete your account. \n"
     end
@@ -192,7 +192,7 @@ class LineBotController < ApplicationController
         time_slot = hour + ":" + minute
         user.update(line_update_time: time_slot, line_notifications: true)
         "Updated.\n" +
-        "You will be notified around #{user.line_update_time} about #{user.line_countries}"
+        "You will be notified about #{user.line_countries} around #{user.line_update_time} GMT (+9h for Japan, -4h NYT)"
       else
         "You must sign up to use this feature"
       end
