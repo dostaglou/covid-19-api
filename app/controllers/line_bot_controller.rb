@@ -30,10 +30,19 @@ class LineBotController < ApplicationController
       when Line::Bot::Event::MessageType::Text
         @user_id = event["source"]["userId"]
         response = client.get_profile(@user_id)
+
         case response
         when Net::HTTPSuccess
           contact = JSON.parse(response.body)
           @username = contact["displayName"]
+          @line_user = User.find_or_initialize_by(line_id: @user_id)
+          if !@line_user.line_signed_up
+            @line_user.attributes = { line_id: @user_id,
+                                      line_name: @username,
+                                      line_notifications: true,
+                                      line_deleted_at: nil }
+            @line_user.save
+          end
         end
 
         if event.message["text"]
@@ -117,7 +126,8 @@ class LineBotController < ApplicationController
         user.attributes = { line_id: @user_id,
                             line_name: @username,
                             line_notifications: true,
-                            line_deleted_at: nil }
+                            line_deleted_at: nil,
+                            line_signed_up: true }
         user.save
         "You have been added. Please respond with COUNTRY-update. \n" +
         "This will enable daily notifications about that country for you. \n" +
