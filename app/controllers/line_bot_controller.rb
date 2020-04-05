@@ -110,7 +110,7 @@ class LineBotController < ApplicationController
 
   def message_signup(message:, analyze:)
     if analyze
-      /(signup)/i.match(message)
+      /(signup)/i.match(message) || /sign up/i.match(message)
     else
       if @username && @user_id
         user = User.find_or_initialize_by(line_id: @user_id)
@@ -144,7 +144,7 @@ class LineBotController < ApplicationController
 
   def message_turn_off(message:, analyze:)
     if analyze
-      /(turn-off)/i.match(message)
+      /(turn-off)/i.match(message) || /(turn off)/i.match(message)
     else
       if @user_id && user = User.find_by(line_id: @user_id)
         user.update(line_notifications: false)
@@ -235,7 +235,7 @@ class LineBotController < ApplicationController
                       .order(created_at: :desc)
                       .limit(1)
                       .first
-    "Informaiton for #{country}: \n" +
+    "Information for #{country}: \n" +
     "Total Cases: #{entry.total_cases} - Total Deaths: #{entry.total_deaths} \n" +
     "Recovered: #{entry.recovered} - Active: #{entry.active} \n" +
     "24h prior to data collection (#{entry.updated}): \n" +
@@ -247,7 +247,7 @@ class LineBotController < ApplicationController
     users.each do |user|
       id = user.line_id
       content = single_country_info(user.line_countries)
-
+      content += "\n\nYou may turn off these notifications by testing turn-off"
       broadcast(id: id, content: content)
     end
   end
