@@ -245,6 +245,7 @@ class LineBotController < ApplicationController
                       .order(created_at: :desc)
                       .limit(1)
                       .first
+    entry.country.update(line_request_count: entry.country.line_request_count + 1)
     "Information for #{country}: \n" +
     "Total Cases: #{entry.total_cases} - Total Deaths: #{entry.total_deaths} \n" +
     "Recovered: #{entry.recovered} - Active: #{entry.active} \n" +
