@@ -27,6 +27,8 @@ module DataRequest
           critical: datum["critical"] || 0,
           case_per_million: datum["casesPerOneMillion"] || 0,
           death_per_million: datum["deathsPerOneMillion"] || 0,
+          tests_conducted: datum["tests"],
+          tests_per_million: datum["testsPerOneMillion"],
           updated: Time.at(datum["updated"]&.to_i / 1000).to_datetime,
         }
 
