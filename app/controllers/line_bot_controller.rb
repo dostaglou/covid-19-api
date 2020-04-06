@@ -119,7 +119,7 @@ class LineBotController < ApplicationController
 
   def message_signup(message:, analyze:)
     if analyze
-      /(signup)/i.match(message) || /sign up/i.match(message)
+      /(signup)/i.match(message) || /(sign up)/i.match(message)
     else
       if @username && @user_id
         user = User.find_or_initialize_by(line_id: @user_id)
@@ -172,9 +172,9 @@ class LineBotController < ApplicationController
     else
       if @user_id && user = User.where(line_deleted_at: nil).find_by(line_id: @user_id)
         country = /\w+(-update)/i.match(message).to_s.split("-")&.first
-        if Country::COUNTRY_NAMES.include?(country)
+        if country = country_name_resolver(message: country)
           user.update(line_countries: country)
-          "Updated. You will now be notified about #{country}"
+          "Updated. You will now be notified about #{country} about #{user.line_update_time}"
         else
           "I am sorry, #{country} doesn't exist in my database. \n" +
           message_x_country_list(letter: country.first, analyze: false, message: nil)
