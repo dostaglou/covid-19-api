@@ -1,4 +1,5 @@
 module DataRequest
+  require 'csv'
   include HTTParty
   class << self
     BASE_URL = "https://corona.lmao.ninja/countries"
