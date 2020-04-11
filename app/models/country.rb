@@ -1,5 +1,9 @@
 class Country < ApplicationRecord
 
+  REGIONS =
+  ["NORTH AMERICA", "EU", "EAST ASIA"]
+
+
   NORTH_AMERICA =
   ["USA", "Canada", "Mexico"]
 
@@ -12,7 +16,7 @@ class Country < ApplicationRecord
     ]
 
   EAST_ASIA =
-  ["China", "Hong Kong", "Singapore", "Japan", "Taiwan", "Mongolia", "S. Korea"]
+  ["Hong Kong", "Singapore", "Japan", "Taiwan", "Mongolia", "S. Korea"]
 
   COUNTRY_NAMES =
   ["USA", "Italy", "Spain", "Germany", "Iran", "France", "UK", "Switzerland",
