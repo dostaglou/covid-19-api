@@ -8,10 +8,10 @@ class CovidDaily < ApplicationRecord
                                  end
 
   def mortality_rate
-    self.total_deaths / self.total_cases.to_f * 100
+    (self.total_deaths / self.total_cases.to_f * 100).round(4)
   end
 
   def recovery_rate
-    self.recovered / self.total_cases.to_f * 100
+    (self.recovered / self.total_cases.to_f * 100).round(4)
   end
 end
