@@ -4,6 +4,6 @@ Rails.application.routes.draw do
   end
   post "/graphql", to: "graphql#execute"
   post '/callback', to: 'line_bot#callback'
-
+  post '/callback_twitter', to: 'twitter_bot#callback'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

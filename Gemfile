@@ -44,6 +44,10 @@ gem 'httparty', '~> 0.13.7'
 
 gem 'line-bot-api'
 
+# Twitter integration
+
+gem 'twitter'
+
 # GraphQL
 
 gem "graphql"

@@ -3,6 +3,10 @@ task :do_something => :environment do
   DataRequest.request_data
 end
 
+task :tweet => :environment do
+  TwitterBotController.new.daily_update
+end
+
 task :line_update => :environment do
   current = Time.now
   current += 9.hours if Rails.env.development?
