@@ -26,6 +26,14 @@ class LinebotMessage
     elsif message_turn_off(message: message, analyze: true)
       message_turn_off(message: message, analyze: false)
 
+    # AVAILABLE REGIONS
+    elsif message_regions(message: message, analyze: true)
+      message_regions(message: message, analyze:false)
+
+    # DATA SOURCE
+    elsif message_source(message: message, analyze: true)
+      message_source(message: message, analyze: false)
+
     # UPDATE-COUNTRY (Notification)
     elsif message_update_country(message: message, analyze: true)
       message_update_country(message:message, analyze: false)
@@ -57,12 +65,15 @@ class LinebotMessage
       /(help)/i.match(message)
     else
     "The list of options are: \n" +
-    "1) Type 1 country name (capitalized) to get info on it. Ex: Japan, USA, UK. \n" +
+    "1) Type a country or region name to get info on it. Ex: Japan, USA, East Asia. \n" +
     "2) Type LETTER-countries to get a list of those countries. Ex: j-countries. \n" +
-    "3) Type Signup to get daily (9am JST) notifications about a single coutnry. \n" +
-    "4) Type HOUR:MINUTES to change notification time. Must be in half-hour increments. Ex: 09:30, 23:00. All times in GMT \n" +
-    "5) Type Turn-Off to remove daily notifications. \n" +
-    "6) Type Delete to delete your account. \n"
+    "3) Type REGIONS to see what regions we currently support \n" +
+    "4) Type Signup to get daily (9am JST) notifications about a single coutnry. \n" +
+    "5) Type HOUR:MINUTES to change notification time. Must be in half-hour increments. Ex: 09:30, 23:00. All times in GMT \n" +
+    "6) Type Turn-Off to remove daily notifications. \n" +
+    "7) Type Delete to delete your account. \n" +
+    "8) Type source to learn the source for our data \n" +
+    "9) Type contact for our email to send feedback. "
     end
   end
 
@@ -112,6 +123,26 @@ class LinebotMessage
       else
         "I am sorry, you must sign up to access this feature."
       end
+    end
+  end
+
+  def message_regions(message:, analyze:)
+    if analyze
+      /(regions)/i.match(message) || /(region)/i.match(message)
+    else
+      "We currently support: #{Country::REGIONS.join(', ')}"
+    end
+  end
+
+  def message_source(message:, analyze:)
+    if analyze
+      /(source)/i.match(message)
+    else
+      "The main source for this bot can be found at:\n" +
+      "https://github.com/NovelCOVID/API \n" +
+      "They claim to get most of their information from: \n" +
+      "https://www.worldometers.info/coronavirus/ \nand \n" +
+      "https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data/csse_covid_19_time_series"
     end
   end
 
