@@ -1,0 +1,10 @@
+<div class="bg-light">
+  <h3 class="text-center mb-3">Data for <%= country.name %></h3>
+  <%= render 'shared/left_right_list', title: "Last Update", value: recent.updated %>
+  <%= render 'shared/left_right_list', title: "Population", value: country.population %>
+  <%= render 'shared/left_right_list', title: "Total Cases", value: recent.total_cases %>
+  <%= render 'shared/left_right_list', title: "Total Deaths", value: recent.total_deaths %>
+  <%= render 'shared/left_right_list', title: "Mortality Rate", value: recent.mortality_rate %>
+  <%= render 'shared/left_right_list', title: "Total Infection Rate", value: country.percent_infected %>
+  <%= render 'shared/left_right_list', title: "7 Day Infection Rate", value: growth %>
+</div>
