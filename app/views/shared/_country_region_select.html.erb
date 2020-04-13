@@ -1,0 +1,20 @@
+  <div class="d-flex justify-content-between mt-4">
+    <div class="w-50">
+      <h4>Select a Country</h4>
+      <select class="w-100" onchange="window.location=this.value">
+        <option>Select a Country</option>
+        <% countries.each do |c| %>
+          <option value="<%= country_path(c.name) %>"><%= c.name %></option>
+        <% end %>
+      </select>
+    </div>
+    <div class="w-50">
+      <h4 class="text-right">Select a Region</h4>
+      <select class="w-100" onchange="window.location=this.value">
+        <option>Select a Region</option>
+        <% regions.each do |r| %>
+          <option value="<%= region_path(r.gsub(" ", "_")) %>"><%= r %>
+        <% end %>
+      </select>
+    </div>
+  </div>
