@@ -17,6 +17,7 @@ class CountriesController < ApplicationController
   def show
     @country_level = true
     @country = @countries.find {|c| c.name == (params[:name]) }
+    @country.update(web_request_count: 1 + @country.web_request_count)
     @country_recent = @country.covid_dailies.most_recent
     @country_growth = @country.growth_rate
   end
