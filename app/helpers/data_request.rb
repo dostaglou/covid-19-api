@@ -8,7 +8,6 @@ module DataRequest
       parsed = JSON.parse response.body
 
       build_db_entry(parsed)
-      msg_slack
 
       return nil
     end

@@ -1,6 +1,10 @@
 desc "This is a task that is called by the Heroku Scheduler add-on"
-task :do_something => :environment do
+task :request_data => :environment do
   DataRequest.request_data
+end
+
+task :msg_slack => :environment do
+  DataRequest.msg_slack
 end
 
 task :tweet => :environment do
