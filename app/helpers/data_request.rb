@@ -3,7 +3,6 @@ module DataRequest
   class << self
     BASE_URL = "https://corona.lmao.ninja/v2/countries"
     def request_data
-      byebug
       response = HTTParty.get(BASE_URL)
       parsed = JSON.parse response.body
 
