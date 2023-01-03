@@ -38,7 +38,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 
 gem "slack-notifier"
 
-gem 'httparty', '~> 0.13.7'
+gem 'httparty', '~> 0.21.0'
 
 # Line integration
 
