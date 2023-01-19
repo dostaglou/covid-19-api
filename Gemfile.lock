@@ -78,7 +78,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.12.2)
-    concurrent-ruby (1.1.6)
+    concurrent-ruby (1.1.10)
     crass (1.0.6)
     diff-lcs (1.3)
     domain_name (0.5.20190701)
@@ -95,8 +95,8 @@ GEM
     ffi-compiler (1.0.1)
       ffi (>= 1.0.0)
       rake
-    globalid (0.4.2)
-      activesupport (>= 4.2.0)
+    globalid (1.0.1)
+      activesupport (>= 5.0)
     graphiql-rails (1.7.0)
       railties
       sprockets-rails
@@ -117,7 +117,7 @@ GEM
     httparty (0.13.7)
       json (~> 1.8)
       multi_xml (>= 0.5.2)
-    i18n (1.8.2)
+    i18n (1.12.0)
       concurrent-ruby (~> 1.0)
     io-like (0.3.1)
     jbuilder (2.10.0)
@@ -142,10 +142,12 @@ GEM
     memoizable (0.4.2)
       thread_safe (~> 0.3, >= 0.3.1)
     method_source (1.0.0)
-    mimemagic (0.3.4)
+    mimemagic (0.3.10)
+      nokogiri (~> 1)
+      rake
     mini_mime (1.0.2)
     mini_portile2 (2.4.0)
-    minitest (5.14.0)
+    minitest (5.17.0)
     msgpack (1.3.3)
     multi_xml (0.6.0)
     multipart-post (2.1.1)
@@ -263,7 +265,7 @@ GEM
       multipart-post (~> 2.0)
       naught (~> 1.0)
       simple_oauth (~> 0.3.0)
-    tzinfo (1.2.7)
+    tzinfo (1.2.10)
       thread_safe (~> 0.1)
     uglifier (4.2.0)
       execjs (>= 0.3.0, < 3)
